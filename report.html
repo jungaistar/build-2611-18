@@ -58,7 +58,7 @@ body{margin:0;font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun
 <li>과정: 생성형 AI 업무자동화 전문가과정 2차수</li>
 <li>점검일: 2026-11-13 (판 2026-11-13.1 · 도구 v1.0)</li>
 <li>사이트: <a href="https://build-2611-18.jobability.co.kr/">https://build-2611-18.jobability.co.kr/</a></li>
-<li>소스: 비공개 리포지토리 jungaistar/build-2611-18 (화면 · 문서 파일은 사이트 주소에서 그대로 열립니다)</li>
+<li>리포지토리(소스 전체 · Download ZIP): <a href="https://github.com/jungaistar/build-2611-18">https://github.com/jungaistar/build-2611-18</a></li>
 </ul>
 </section><section class="card"><h2>1. 종합</h2>
 <p><b>사이트 · 인계 자료 준비 완료</b></p>
@@ -72,7 +72,7 @@ body{margin:0;font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun
 <div class="tablewrap"><table><thead><tr><th>기능</th><th>내용</th></tr></thead><tbody><tr><td>표준 CSV 읽기</td><td>CSV · 엑셀 여러 개를 이어 붙이고, 못 읽은 줄은 위치와 이유를 알립니다.</td></tr><tr><td>옵션별 거르기</td><td>제조사 · 모델 · 블레이드 · 붐/암 · 캐빈 · 슈 · CW 를 눌러 같은 조건끼리 비교합니다.</td></tr><tr><td>2D 비교</td><td>고른 높이에서 반경에 따른 전방 · 측방 인양력 곡선. 기준 모델은 별 표식입니다.</td></tr><tr><td>3D 비교</td><td>반경 × 높이 × 인양력을 한 그림에 놓고 끌어서 돌려 봅니다.</td></tr><tr><td>기준 대비 차이표</td><td>지정 반경의 인양력과 차이(%). 사이 반경은 「추정」으로 표시합니다.</td></tr><tr><td>AI 자동정리 변환</td><td>AI 가 읽은 JSON 을 검증해 단위 · 표기를 맞춘 표준 CSV 로 바꿉니다.</td></tr></tbody></table></div>
 <div class="tablewrap"><table><thead><tr><th>시험 파일</th><th>통과</th><th>결과</th></tr></thead><tbody><tr><td>logic.test.js</td><td>55개</td><td>통과</td></tr><tr><td>smoke.browser.js</td><td>37개</td><td>통과</td></tr></tbody></table></div>
 </section><section class="card"><h2>4. 인계 준비</h2>
-<div class="tablewrap"><table><thead><tr><th>항목</th><th>결과</th><th>근거</th></tr></thead><tbody><tr><td>시험(계산 규칙 · 화면)</td><td class="st ok">충족</td><td>logic.test.js 55개 · smoke.browser.js 37개</td></tr><tr><td>Supabase 설정 파일</td><td class="st ok">충족</td><td>auth.sql · board.sql · site.sql · verify.sql</td></tr><tr><td>Supabase 연결 안내</td><td class="st ok">충족</td><td>supabase/README.md</td></tr><tr><td>내 깃허브로 옮기기 안내</td><td class="st ok">충족</td><td>docs/내_깃허브로_옮기기.md</td></tr><tr><td>기획서(워드 · 웹) · 개발일지</td><td class="st ok">충족</td><td>판 이력 1건 · 개발일지 1편 · 커밋 1개</td></tr><tr><td>리포지토리(소스 전체)</td><td class="st ok">충족</td><td>jungaistar/build-2611-18 · 비공개(개발 자료 전체 포함)</td></tr><tr><td>게시판 · 새 글 알림 · 첫 화면 고르기</td><td class="st ok">충족</td><td>과정용 프로젝트에 SQL 적용(접두사 build261118_, 표 7 · 함수 11 · 정책 15)</td></tr></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>항목</th><th>결과</th><th>근거</th></tr></thead><tbody><tr><td>시험(계산 규칙 · 화면)</td><td class="st ok">충족</td><td>logic.test.js 55개 · smoke.browser.js 37개</td></tr><tr><td>Supabase 설정 파일</td><td class="st ok">충족</td><td>auth.sql · board.sql · site.sql · verify.sql</td></tr><tr><td>Supabase 연결 안내</td><td class="st ok">충족</td><td>supabase/README.md</td></tr><tr><td>내 깃허브로 옮기기 안내</td><td class="st ok">충족</td><td>docs/내_깃허브로_옮기기.md</td></tr><tr><td>기획서(워드 · 웹) · 개발일지</td><td class="st ok">충족</td><td>판 이력 1건 · 개발일지 1편 · 커밋 8개</td></tr><tr><td>리포지토리(소스 전체)</td><td class="st ok">충족</td><td><a href="https://github.com/jungaistar/build-2611-18">https://github.com/jungaistar/build-2611-18</a> (공개 — Code → Download ZIP)</td></tr><tr><td>게시판 · 새 글 알림 · 첫 화면 고르기</td><td class="st ok">충족</td><td>과정용 프로젝트에 SQL 적용(접두사 build261118_, 표 7 · 함수 11 · 정책 15)</td></tr></tbody></table></div>
 </section><section class="card"><h2>5. 판 이력</h2>
 <ul>
 <li>v1.0 (2026-11-13) — 기획자의 V6 프로그램(Streamlit)을 웹 판으로 옮김 — 표준 CSV 읽기 · 필터 · 2D · 3D · 기준 대비 차이 · 엑셀 · AI JSON 변환</li>
