@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기획서 — 굴착기 인양력 비교 · 시각화</title>
+<meta name="robots" content="index,follow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.plan-figs figure{margin:0 0 22px;} .plan-figs img{width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff;}
+.plan-figs figcaption{font-size:13px;color:var(--sub);text-align:center;margin-top:6px;}
+.plan td{white-space:normal;} .plan td .btn{min-height:36px;white-space:nowrap;}
+h3{font-size:15px;margin:16px 0 6px;} main ul{margin:0 0 10px 20px;}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="주요 메뉴">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">굴착기 인양력 비교 · 시각화 <small>build-2611-18 · 기획 조민규</small></a>
+    <ul class="topnav-links">
+      <li><a href="index.html">도구</a></li>
+      <li><a href="guide.html">사용법</a></li>
+      <li><a href="plan.html" class="active" aria-current="page">기획서</a></li>
+    </ul>
+  </div>
+</nav>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">생성형 AI 업무자동화 전문가과정 · 2차수 · 프로젝트 18 · 기획서 v1.0</div>
+  <h1>굴착기 인양력 비교 · 시각화 기획서</h1>
+  <p>자사 · 경쟁사 굴착기 인양력 표준 CSV(19열)를 올리면 옵션별로 걸러 전방 · 측방 인양력을 2D · 3D 로 비교하고, 기준 모델 대비 차이(%)와 엑셀 자료를 만드는 브라우저 도구입니다. 기획자가 Python(Streamlit)으로 만든 V6 프로그램을 설치 없이 쓰는 웹 판으로 옮겼습니다.</p>
+</div></header>
+<main><div class="wrap">
+<div class="card">
+  <h2 style="margin-top:0">기획서 내려받기</h2>
+  <p class="sub">파이프라인 · 아키텍처 · 와이어프레임 · 개발일지가 들어간 워드 문서입니다. 버전마다 따로 남깁니다.</p>
+  <div class="tablewrap plan"><table><thead><tr><th>버전</th><th>날짜</th><th>바뀐 점</th><th>파일</th></tr></thead><tbody><tr><td><b>v1.0</b></td><td>2026-11-13</td><td>기획자의 V6 프로그램(Streamlit)을 웹 판으로 옮김 — 표준 CSV 읽기 · 필터 · 2D · 3D · 기준 대비 차이 · 엑셀 · AI JSON 변환</td><td><a class="btn primary" href="docs/기획서/build-2611-18_조민규_굴착기인양력비교시각화_기획서_v1.0.docx" download>워드 내려받기</a></td></tr></tbody></table></div>
+</div>
+<div class="card plan">
+  <h2 style="margin-top:0">요구사항과 구현</h2>
+  <div class="tablewrap"><table><thead><tr><th>기획서 요구</th><th>구현</th></tr></thead><tbody><tr><td>자사 · 경쟁사 표준 CSV 업로드</td><td>CSV · 엑셀을 여러 개 올려 이어 붙임. 머리글은 이름으로 찾음(순서 · 대소문자 무관). 못 읽은 줄은 위치와 이유를 알림</td></tr><tr><td>제조사 · 모델 · 블레이드 · 붐/암 · 캐빈 · 슈 · CW 필터</td><td>항목마다 여러 값을 눌러 고름. 다른 항목 선택에 따라 남는 값만 보임. 값이 하나면 자동으로 정해진 것으로 표시</td></tr><tr><td>기준 모델 설정</td><td>곡선 표에서 ★ 로 고름. 2D 에서 별 표식 · 굵은 선</td></tr><tr><td>Height 선택(0m 기본)</td><td>0m 가 있으면 0, 없으면 0 에 가장 가까운 높이</td></tr><tr><td>2D — Radius–Capacity Front/Side 그래프</td><td>SVG 꺾은선 두 장(전방 · 측방). 값 표시 켜고 끄기, 곡선 색 바꾸기, 별표 값은 속 빈 점</td></tr><tr><td>3D — Radius × Height × Capacity</td><td>SVG 로 비춘 곡면(높이별 곡선 + 반경별 연결) · 점 모양. 끌어서 돌림. 모든 높이를 그림</td></tr><tr><td>특정 Radius 에서 기준 대비 차이(%)와 상세 비교표</td><td>반경을 적으면 그 반경만. 사이 반경은 직선 보간 + 「추정」 표시, 범위 밖은 빈 칸</td></tr><tr><td>엑셀 다운로드(2D Charts · Front Data · Side Data)</td><td>Front Data · Side Data · Front 비교 · Side 비교 · Rows 시트. 차트 그림은 넣지 않음(한계)</td></tr><tr><td>AI 자동정리 — 이미지 인식 → JSON 검토 → 19열 CSV</td><td>이미지 인식은 쓰는 AI 서비스에서(지침 복사 제공). 여기서는 JSON 검증 · 단위 변환 · 옵션 표기 맞춤 · CSV 변환 · 비교로 넘기기. 규칙은 V6 core.py 와 같음</td></tr><tr><td>별표(*) 값 보존</td><td>값과 분리해 notes 의 STAR_FRONT=1 · STAR_SIDE=1 로 두고, 표 · 그래프 · 엑셀에 표시</td></tr></tbody></table></div>
+</div>
+<div class="card plan-figs"><h2 style="margin-top:0">그림으로 보기</h2><figure><img src="docs/img/pipeline.png" alt="처리 흐름(파이프라인)" loading="lazy"><figcaption>처리 흐름(파이프라인)</figcaption></figure><figure><img src="docs/img/architecture.png" alt="구성(아키텍처)" loading="lazy"><figcaption>구성(아키텍처)</figcaption></figure><figure><img src="docs/img/wireframe-1.png" alt="와이어프레임 — 데이터 · 조건" loading="lazy"><figcaption>와이어프레임 — 데이터 · 조건</figcaption></figure><figure><img src="docs/img/wireframe-2.png" alt="와이어프레임 — 그래프 · 비교표" loading="lazy"><figcaption>와이어프레임 — 그래프 · 비교표</figcaption></figure><figure><img src="docs/img/screen.png" alt="실제 화면(예제 데이터)" loading="lazy"><figcaption>실제 화면(예제 데이터)</figcaption></figure></div>
+<div class="card"><h2 style="margin-top:0">개발일지</h2><h3>2026-11-13 · v1.0 신설</h3><ul><li>패들릿 03 섹션에 기획자가 올린 V6 프로그램 묶음 · 설명서 · 더미 CSV 를 읽고, 같은 기능을 설치 없는 웹 판으로 새 번호(18)에 만듦</li><li>변환 규칙은 V6 core.py 를 그대로 옮기고, 그 예제 입력 · 출력으로 대조</li><li>API 키가 필요한 이미지 인식은 빼고, 지침 복사 + JSON 붙여넣기 변환으로 대신함</li></ul></div>
+</div></main>
+<footer><div class="wrap">생성형 AI 업무자동화 전문가과정 · 2차수 · 프로젝트 18 · 기획 조민규 · <a href="https://build-2611-00.jobability.co.kr/">2차수 프로젝트 총괄</a></div></footer>
+</body>
+</html>

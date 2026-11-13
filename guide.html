@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사용법 — 굴착기 인양력 비교 · 시각화</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css?v=1.0">
+<link rel="stylesheet" href="css/app.css?v=1.0">
+</head>
+<body>
+<nav class="topnav" aria-label="주요 메뉴">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">인양력 비교 <small>build-2611-18 · 기획 조민규</small></a>
+    <ul class="topnav-links">
+      <li><a href="index.html">도구</a></li>
+      <li><a href="guide.html" class="active" aria-current="page">사용법</a></li>
+      <li><a href="plan.html">기획서</a></li>
+    </ul>
+  </div>
+</nav>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">사용법</div>
+  <h1>표준 CSV 를 올리면 인양력 비교 그래프와 차이표가 나옵니다</h1>
+  <p>데이터 올리기 → 조건 고르기 → 2D · 비교표 · 3D → 내려받기 순서입니다. 파일은 이 브라우저 안에서만 읽습니다.</p>
+</div></header>
+<main><div class="wrap doc">
+
+<div class="card">
+  <h2 style="margin-top:0">1. 데이터 준비 — 표준 CSV 19열</h2>
+  <p>「표준 양식(CSV) 내려받기」로 받은 머리글에 맞춰 한 줄에 「한 모델 · 한 사양 · 한 반경 · 한 높이」의 값을 적습니다. 엑셀(.xlsx)로 저장해도 읽습니다. 여러 파일을 올리면 이어 붙입니다.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>열</th><th>내용</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>Manufacturer · Model</td><td>제조사 · 모델</td><td>Model 이 비면 그 줄은 건너뜁니다</td></tr>
+      <tr><td>Machine Type · Boom Length (m) · Boom opt · Arm Length (m) · Arm opt · Cabin Type · Shoe Type · Counterweight (kg) · weight class · CW opt · Blade up/down</td><td>사양 · 옵션</td><td>같은 사양끼리 한 곡선이 됩니다. 대소문자는 맞춰 읽습니다</td></tr>
+      <tr><td>Radius (m) · Height (m)</td><td>작업 반경 · 높이</td><td>숫자가 아니면(예: MAX) 건너뛰고 알립니다</td></tr>
+      <tr><td>Front · Side Lifting Capacity (ton)</td><td>전방 · 측방 인양력</td><td>빈 칸은 0 이 아니라 「값 없음」. 별표(*)는 값과 따로 보존합니다</td></tr>
+      <tr><td>Operating Weight · notes</td><td>운전중량 · 메모</td><td>notes 의 STAR_FRONT=1 · STAR_SIDE=1 은 별표 표시</td></tr>
+    </tbody></table></div>
+  <p>머리글은 이름으로 찾으므로 열 순서가 달라도 됩니다. Model · Radius (m) · Height (m) 과 Front · Side 중 하나는 꼭 있어야 합니다.</p>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">2. 비교 조건</h2>
+  <ul>
+    <li><b>거르기</b> — 제조사 · 모델 · 블레이드 · 붐 · 암 · 캐빈 · 슈 · CW · 중량급을 눌러 고릅니다. 여러 개를 함께 고를 수 있고, 고르지 않은 항목은 전부입니다. 값이 하나뿐인 항목은 회색으로 보입니다.</li>
+    <li><b>곡선</b> — 같은 사양(모델 · 붐 · 암 · 캐빈 · 슈 · CW · 블레이드)이 한 곡선입니다. 표에서 표시를 켜고 끄고, 색을 바꾸고, 기준 모델(★)을 고릅니다.</li>
+    <li><b>Height</b> — 2D 그래프와 비교표가 쓰는 높이입니다. 0m(지면)가 있으면 처음에 0 이 골라집니다.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">3. 그래프와 비교표</h2>
+  <ul>
+    <li><b>2D</b> — 고른 높이에서 Radius 에 따른 전방 · 측방 인양력 곡선입니다. 기준 모델은 별 표식, 원본에 별표(*)가 붙은 값은 속 빈 점입니다. 점에 마우스를 올리면 값이 보입니다.</li>
+    <li><b>기준 모델 대비 차이</b> — 차이(%) = (값 − 기준) ÷ 기준 × 100. 반경 칸을 비우면 데이터에 있는 반경 전부, 「2, 2.5, 3.2」처럼 적으면 그 반경만 봅니다.</li>
+    <li><b>추정</b> — 데이터에 없는 사이 반경은 앞뒤 값을 직선으로 이은 값이고 「추정」으로 표시합니다. 데이터 범위 밖의 반경은 값을 만들지 않습니다.</li>
+    <li><b>3D</b> — Radius × Height × Capacity 를 한 그림에 봅니다. 그림을 끌거나 슬라이더로 돌립니다. 2D 의 높이 선택과 상관없이 모든 높이를 그립니다.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">4. 내려받기</h2>
+  <ul>
+    <li><b>엑셀</b> — Front Data · Side Data(가로 반경 × 세로 곡선, 엑셀에서 차트를 바로 만들 수 있는 배치) · Front 비교 · Side 비교 · Rows(거른 표준 19열).</li>
+    <li><b>거른 데이터 CSV</b> — 지금 조건에 맞는 행만 표준 양식으로.</li>
+    <li><b>인쇄 · PDF</b> — 그래프와 비교표만 인쇄합니다.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">5. 경쟁사 표 이미지 → 표준 CSV(AI 자동정리)</h2>
+  <ol>
+    <li>「이미지 분석 지침 복사」를 누르고, 쓰는 AI 에 지침과 카탈로그 인양력 표 이미지를 함께 올립니다.</li>
+    <li>AI 가 준 JSON 을 붙여 넣고 「검증 및 변환」을 누릅니다. kg · kN · lbs 는 ton 으로, mm · cm · ft 는 m 로 바꾸고, Cab → CABIN, Rubber Track → RUBBER, Extra Counterweight → ADD 처럼 표기를 맞춥니다.</li>
+    <li>표를 원본 이미지와 대조합니다. 틀린 숫자는 JSON 에서 고치고 다시 변환합니다.</li>
+    <li>맞으면 「변환된 CSV 내려받기」 또는 「변환된 데이터로 비교하기」.</li>
+  </ol>
+  <p>단위가 적혀 있지 않거나 반경 · 높이가 없는 칸은 행을 만들지 않고 몇 번째 칸이 왜 안 되는지 알립니다. Model 이 없으면 비교에 넣을 수 없으니 JSON 의 defaults 에 Model 을 적어 주세요.</p>
+  <p>이 도구는 API 키를 받지 않습니다. 이미지를 읽는 일은 쓰시는 AI 서비스에서 하고, 여기서는 결과를 검증 · 변환만 합니다.</p>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">6. 이 판에서 하지 않는 것</h2>
+  <ul>
+    <li>이미지를 직접 올려 AI 로 읽는 기능(API 키가 필요해 뺐습니다 — 원본 V6 프로그램의 기능).</li>
+    <li>엑셀 파일 안에 차트를 만들어 넣기(데이터 시트만 만듭니다).</li>
+    <li>서버 저장 · 여러 사람 공동 편집. 올린 데이터는 창을 닫으면 사라집니다.</li>
+  </ul>
+</div>
+
+</div></main>
+<footer><div class="wrap">생성형 AI 업무자동화 전문가과정 2차수 · 프로젝트 18 · 기획 조민규</div></footer>
+</body>
+</html>

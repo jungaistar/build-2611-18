@@ -1,0 +1,42 @@
+/* 이 앱 전용 — 공통 style.css 뒤에 읽는다 */
+[hidden]{display:none !important;}
+h3{font-size:15.5px; font-weight:700; margin:22px 0 8px;}
+h3 small,h2 small{font-weight:400; font-size:12.5px; margin-left:6px; color:var(--sub);}
+a{color:var(--accent);}
+section{scroll-margin-top:70px;}
+.btn.sm{min-height:34px; padding:0 12px; font-size:13px;} .btn.danger{color:var(--danger); border-color:#e7b5ad;}
+.bad{color:var(--danger); font-weight:650;} .muted{color:var(--sub);}
+.note ul,.warn ul,.ok ul{margin:6px 0 0 18px;}
+.form{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr)); gap:10px 14px; align-items:end; margin:10px 0;}
+.form label{display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--sub); min-width:0;}
+input[type=text],select,textarea{font:inherit; font-size:14px; padding:6px 8px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink); min-width:0; width:100%;}
+input[type=range]{width:100%;}
+textarea{min-height:150px; resize:vertical; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; line-height:1.55; margin-top:10px;}
+.tablewrap.free{max-height:none;}
+.frow{display:flex; flex-wrap:wrap; gap:6px 8px; align-items:center; margin:7px 0; font-size:13.5px;}
+.frow > b{min-width:74px; font-size:12.5px; color:var(--sub); font-weight:600;}
+.chip{border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:999px; padding:4px 12px; font:inherit; font-size:13px; cursor:pointer; min-height:30px;}
+.chip.on{background:var(--brand); border-color:var(--brand); color:#fff;}
+.chip.only{background:#eef2f6; cursor:default; color:var(--sub);}
+#curves td{padding:5px 8px; vertical-align:middle;} #curves input[type=color]{width:34px; height:26px; padding:0; border:1px solid var(--line); border-radius:5px; background:#fff;}
+#curves tr.off td{opacity:.5;} #curves tr.base td:nth-child(3){font-weight:700;}
+.win{margin:0 0 6px; min-width:0;}
+svg.big{width:100%; height:auto; display:block; background:#fff; border:1px solid var(--line); border-radius:10px; touch-action:none;}
+svg .grid{stroke:#e6ebf0;} svg .ax{font-size:11.5px; fill:#5b6b7b;} svg .axt{font-size:12px; fill:#34404c; font-weight:600;} svg .lbl{font-size:10.5px; fill:#152232;}
+svg .frame{stroke:#b7c2cd; stroke-width:1; fill:none;}
+.legend{display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; font-size:12.5px; color:var(--sub); margin:6px 0;}
+.legend .sw{display:inline-block; width:14px; height:4px; border-radius:2px; margin-right:5px; vertical-align:3px;}
+td.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap;}
+td.up{color:#0a6045;} td.down{color:var(--danger);} td .est{font-size:11px; color:#8a5a00; background:#fdf1d8; border-radius:4px; padding:0 4px; margin-left:4px;}
+td small.d{display:block; font-size:11.5px;}
+tr.base td{background:#f1f6fa;} td b.star{font-weight:800;}
+.steps{margin:0 0 12px 20px;} .steps li{margin-bottom:5px; font-size:14px;}
+details.box{border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-top:10px; background:#fbfdff;}
+details.box summary{cursor:pointer; font-weight:650; font-size:14px;}
+pre.prompt{white-space:pre-wrap; font-size:12px; line-height:1.6; margin:10px 0 0; max-height:320px; overflow:auto;}
+.doc h2{margin-top:30px;} .doc ol,.doc ul{margin:0 0 13px 22px;} .doc li{margin-bottom:5px;}
+@media print{
+  .topnav,.hero,footer,.noprint,#s-data,#s-ai,#filters,.form{display:none !important;}
+  body,html{background:#fff;} main{padding:0;} .card{border:0; padding:0 0 10px; margin:0;} svg,table{break-inside:avoid;}
+  .tablewrap{overflow:visible; max-height:none; border:0;} th{position:static;}
+}

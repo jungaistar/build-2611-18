@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>굴착기 인양력 비교 · 시각화 — 표준 CSV · 2D/3D · 기준 대비 차이 · 엑셀</title>
+<meta name="description" content="자사 · 경쟁사 굴착기 인양력 표준 CSV 를 올리면 옵션별로 걸러 전방 · 측방 인양력을 2D · 3D 로 비교하고, 기준 모델 대비 차이(%)와 엑셀 자료를 만듭니다. 설치 없이 브라우저에서 돌고 파일은 서버로 올라가지 않습니다.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://build-2611-18.jobability.co.kr/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="생성형 AI 업무자동화 전문가과정 · 2차수">
+<meta property="og:url" content="https://build-2611-18.jobability.co.kr/">
+<meta property="og:title" content="굴착기 인양력 비교 · 시각화 — 생성형 AI 업무자동화 전문가과정 2차수">
+<meta property="og:description" content="표준 CSV 를 올리면 옵션별 필터 · 2D/3D 비교 · 기준 모델 대비 차이(%) · 엑셀까지. 설치 없이 브라우저에서.">
+<meta property="og:image" content="https://build-2611-18.jobability.co.kr/og-index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/style.css?v=1.0">
+<link rel="stylesheet" href="css/app.css?v=1.0">
+<!-- auth-kit: 로그인 전에는 도구 화면을 감춘다(js/auth.js 가 판정 뒤 푼다) -->
+<script>document.documentElement.classList.add('auth-lock')</script>
+<link rel="stylesheet" href="css/auth.css?v=2026-11-13.1">
+<link rel="stylesheet" href="css/board.css?v=2026-11-13.1">
+<link rel="stylesheet" href="css/kit-build.css?v=2026-11-13.1">
+<!-- /auth-kit -->
+</head>
+<body>
+<nav class="topnav" aria-label="주요 메뉴">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">인양력 비교 <small>build-2611-18 · 기획 조민규</small></a>
+    <ul class="topnav-links">
+      <li><a href="#s-data">데이터</a></li>
+      <li><a href="#s-cond">조건</a></li>
+      <li><a href="#s-2d">2D</a></li>
+      <li><a href="#s-cmp">비교표</a></li>
+      <li><a href="#s-3d">3D</a></li>
+      <li><a href="#s-ai">AI 자동정리</a></li>
+      <li><a href="guide.html">사용법</a></li>
+      <li><a href="plan.html">기획서</a></li>
+    </ul>
+  </div>
+</nav>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">생성형 AI 업무자동화 전문가과정 · 2차수 · 프로젝트 18</div>
+  <h1>굴착기 인양력 비교 · 시각화</h1>
+  <p>자사 · 경쟁사 인양력 <b>표준 CSV(19열)</b>를 올리면 옵션별로 걸러 <b>전방 · 측방 인양력을 2D · 3D</b>로 비교하고,
+     <b>기준 모델 대비 차이(%)</b>와 엑셀 자료를 만듭니다. Python 설치 없이 브라우저에서 바로 돕니다.</p>
+</div></header>
+
+<main><div class="wrap">
+
+<section id="s-data" class="card">
+  <h2 style="margin-top:0">1. 인양력 데이터를 올리세요 <small>표준 머리글 CSV · 엑셀, 여러 파일 가능</small></h2>
+  <label class="drop" id="drop">
+    <input type="file" id="file" accept=".csv,.xlsx,.xls" multiple>
+    <b>CSV · 엑셀 파일을 끌어다 놓거나 눌러서 고르세요</b>
+    <span>파일은 서버로 올라가지 않습니다 · 읽기와 계산은 이 브라우저 안에서만 합니다</span>
+  </label>
+  <div class="btnrow">
+    <button class="btn primary" id="btn-sample">예제로 해보기</button>
+    <button class="btn" id="btn-template">표준 양식(CSV) 내려받기</button>
+    <button class="btn" id="btn-sample-csv">예제 CSV 내려받기</button>
+    <button class="btn sm danger" id="btn-clear" hidden>올린 데이터 비우기</button>
+  </div>
+  <p class="sub" style="margin-top:10px">예제는 가상 모델 4종(ALPHA AX35 등)입니다 — 실제 장비의 값이 아닙니다.</p>
+  <div id="file-status"></div>
+</section>
+
+<section id="s-cond" class="card" hidden>
+  <h2 style="margin-top:0">2. 비교 조건 <small>고르면 바로 다시 그립니다</small></h2>
+  <div id="filters"></div>
+  <div class="form">
+    <label>Height(2D · 비교표) <select id="height"></select></label>
+    <label>값 표시(Data Label) <select id="label"><option value="off">끔</option><option value="on">켬</option></select></label>
+  </div>
+  <h3>비교할 곡선 <small>같은 사양(모델 · 붐 · 암 · 캐빈 · 슈 · CW · 블레이드)이 한 곡선입니다 · ★ = 기준 모델</small></h3>
+  <div class="tablewrap free" id="curves"></div>
+  <div id="cond-notes"></div>
+</section>
+
+<section id="s-2d" class="card" hidden>
+  <h2 style="margin-top:0">3. 2D 비교 <small>Radius – Lifting Capacity</small></h2>
+  <div class="win"><h3>전방(Front) 인양력</h3><div id="c-front"></div></div>
+  <div class="win"><h3>측방(Side) 인양력</h3><div id="c-side"></div></div>
+</section>
+
+<section id="s-cmp" class="card" hidden>
+  <h2 style="margin-top:0">4. 기준 모델 대비 차이</h2>
+  <div class="form">
+    <label>비교할 Radius(m) <input type="text" id="radii" placeholder="비우면 데이터에 있는 반경 전부 · 예) 2, 2.5, 3.2"></label>
+  </div>
+  <p class="sub">데이터에 없는 사이 반경은 앞뒤 값을 직선으로 이은 <b>추정값</b>이고 「추정」으로 표시합니다. 데이터 범위 밖 반경은 값을 만들지 않습니다.</p>
+  <h3>전방(Front)</h3><div class="tablewrap free" id="t-front"></div>
+  <h3>측방(Side)</h3><div class="tablewrap free" id="t-side"></div>
+  <div class="btnrow noprint"><button class="btn green" id="btn-xlsx">엑셀로 내려받기</button><button class="btn" id="btn-csv">거른 데이터 CSV</button><button class="btn" id="btn-print">인쇄 · PDF 저장</button></div>
+</section>
+
+<section id="s-3d" class="card" hidden>
+  <h2 style="margin-top:0">5. 3D 비교 <small>Radius × Height × Capacity — 그림을 끌어 돌려 봅니다</small></h2>
+  <div class="form">
+    <label>구분 <select id="k3"><option value="front">전방(Front)</option><option value="side">측방(Side)</option></select></label>
+    <label>모양 <select id="m3"><option value="surface">곡면(높이별 곡선 + 반경별 연결)</option><option value="scatter">점</option></select></label>
+    <label>좌우 회전 <input type="range" id="yaw" min="-180" max="180" value="-30"></label>
+    <label>위아래 <input type="range" id="pitch" min="5" max="85" value="30"></label>
+  </div>
+  <div id="c-3d"></div>
+</section>
+
+<section id="s-ai" class="card">
+  <h2 style="margin-top:0">6. 경쟁사 인양력 표 — AI 자동정리 결과를 표준 CSV 로 <small>API 키 없이</small></h2>
+  <ol class="steps">
+    <li>아래 지침을 복사해 쓰는 AI(ChatGPT · Claude · Gemini)에 붙이고, 카탈로그의 인양력 표 <b>이미지</b>를 함께 올립니다.</li>
+    <li>AI 가 준 <b>JSON</b> 을 아래 칸에 붙여 넣고 「검증 및 변환」을 누릅니다. 단위(kg · kN · lb · mm · ft)는 ton · m 로 바꾸고 옵션 표기를 맞춥니다.</li>
+    <li>표를 <b>원본 이미지와 대조</b>해 틀린 숫자를 JSON 에서 고친 뒤 다시 변환합니다. 맞으면 CSV 로 받거나 바로 비교에 넣습니다.</li>
+  </ol>
+  <div class="btnrow"><button class="btn" id="btn-prompt">이미지 분석 지침 복사</button><button class="btn sm" id="btn-json-sample">JSON 예시 넣기</button></div>
+  <details class="box"><summary>지침 전문 보기</summary><pre class="prompt" id="prompt"></pre></details>
+  <textarea id="json" spellcheck="false" placeholder='{"case":"3","defaults":{…},"cells":[…]}'></textarea>
+  <div class="btnrow"><button class="btn primary" id="btn-convert">검증 및 변환</button><button class="btn" id="btn-conv-csv" hidden>변환된 CSV 내려받기</button><button class="btn green" id="btn-conv-use" hidden>변환된 데이터로 비교하기</button></div>
+  <div id="conv-status"></div>
+  <div class="tablewrap" id="conv-table" hidden></div>
+  <p class="sub">AI 는 숫자 · 단위 · 전방/측방 · 옵션 분류를 잘못 읽을 수 있습니다. 대조 없이 설계 판단에 쓰지 마세요. 별표(*)는 값과 따로 보존하고 표에서 굵게 보입니다.</p>
+</section>
+
+</div></main>
+<footer><div class="wrap">생성형 AI 업무자동화 전문가과정 2차수 · 프로젝트 18 · 기획 조민규 · 예제 데이터는 실제 장비 값이 아닙니다.</div></footer>
+<script src="lib/xlsx.full.min.js"></script>
+<script src="js/prompt.js?v=1.0"></script>
+<script src="js/lift.js?v=1.0"></script>
+<script src="js/app.js?v=1.0"></script>
+<!-- auth-kit: 로그인 · 사용 신청 · 승인 · 게시판(키트 정본 data10-00/kit/auth, 적용 build-2611-00/tools/kit) -->
+<script src="vendor/supabase.js?v=2026-11-13.1"></script>
+<script src="js/auth-config.js?v=2026-11-13.1"></script>
+<script src="js/kit-build.js?v=2026-11-13.1"></script>
+<script src="js/board.js?v=2026-11-13.1"></script>
+<script src="js/auth.js?v=2026-11-13.1"></script>
+<!-- /auth-kit -->
+</body>
+</html>
