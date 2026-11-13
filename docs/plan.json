@@ -284,5 +284,23 @@
    "사용법",
    "guide.html"
   ]
- ]
+ ],
+ "landing": {
+  "company": {
+   "name": "HD건설기계",
+   "en": "HD CONSTRUCTION EQUIPMENT",
+   "logo": "images/logo.png",
+   "logoH": 24
+  },
+  "slides": [
+   {
+    "image": "images/slide-1.jpg",
+    "tone": "dark"
+   }
+  ],
+  "heroMode": "slide",
+  "headline": "굴착기 인양 성능\n통합 분석 및 시각화 플랫폼",
+  "lead": "자사 및 경쟁사 굴착기의 인양력 데이터를 통합 관리하고, 모델별 인양 성능을 자동 비교·분석하는 프로그램입니다. 경쟁사 인양력 데이터 추출과 작업 반경(Radius)·인양 높이(Height)별 성능 시각화로 벤치마킹과 설계를 돕습니다.",
+  "eyebrow": "Excavator Lifting Capacity Analysis"
+ }
 }
